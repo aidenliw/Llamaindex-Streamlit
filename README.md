@@ -1,14 +1,16 @@
 # 📦 Retrieval Augmented Generation (RAG) System Using LlamaIndex with OpenAI/Llama2 on Streamlit App
-```
-⬆️ https://llamaindex1.streamlit.app/
-```
 
-Simple Chat App using LlamaIndex's RAG system with OpenAI GPT 3.5 turbo / Llama 2 large language model.
-It can answer questions related to the SEP 775 Computational Natural Language Processing Course from MSET Program at McMaster University.
+## Overview of the App
+![app_screenshot](https://github.com/aidenliw/llamaindex-streamlit/blob/main/img/app_screenshot.png?raw=true)
+- Simple Chat App using LlamaIndex's RAG system with OpenAI GPT 3.5 turbo / Llama 2 large language model.
+- It can answer questions related to the SEP 775 Computational Natural Language Processing Course from Master of Engineering in System and Technology Program at McMaster University.
 
 ## Demo App
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://llamaindex1.streamlit.app/) <- Click the Button on the left.
+```
+https://llamaindex1.streamlit.app/
+```
 
 ## Local Execution
 
@@ -31,6 +33,7 @@ If you want to execute the application locally, please make sure you have done t
 
 Interested in developing the app from scratch? Check out the documentations!
 - [LlamaIndex](https://docs.llamaindex.ai/en/stable/)
+- [Streamlit](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)
 - [OpenAI](https://platform.openai.com/docs/overview)
 - [HuggingFace](https://huggingface.co/)
 - [HuggingFace Llama-2-chat-hf Large Language Model](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
