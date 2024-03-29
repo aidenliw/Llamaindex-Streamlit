@@ -77,12 +77,6 @@ def chatbot_response(question, index):
     return response
 
 
-Settings.llm = large_language_model(LLM_NAME, SYSTEM_PROMPT)
-Settings.embed_model = get_embeddings(EMBED_MODEL_ID)
-Settings.chunk_size = CHUNK_SIZE
-Settings.chunk_overlap = OVERLAP_SIZE
-
-
 # run the streamlit app
 def main():
     st.set_page_config(page_title="Chat with AI Teaching Assistant, powered by LlamaIndex & OpenAI", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
@@ -99,6 +93,10 @@ def main():
     @st.cache_resource(show_spinner=False)
     def load_data():
         with st.spinner(text="Loading and document vectors – hang tight! This should take few seconds."):
+            Settings.llm = large_language_model(LLM_NAME, SYSTEM_PROMPT)
+            Settings.embed_model = get_embeddings(EMBED_MODEL_ID)
+            Settings.chunk_size = CHUNK_SIZE
+            Settings.chunk_overlap = OVERLAP_SIZE
             index = index_and_store(VECTOR_STORE_DIR)
             return index
     index = load_data()
