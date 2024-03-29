@@ -104,10 +104,10 @@ Settings.chunk_overlap = OVERLAP_SIZE
 
 # run the streamlit app
 def main():
-    st.set_page_config(page_title="Chat with the Streamlit docs, powered by LlamaIndex with Llama2", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
+    st.set_page_config(page_title="Chat with AI Teaching Assistant, powered by LlamaIndex & OpenAI", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
 
-    st.title("Chat with AI Teaching assistant, powered by LlamaIndex & Llama2 💬🦙")
-    st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
+    st.title("SEP 775 AI Teaching Assistant, powered by LlamaIndex & OpenAI 💬🦙")
+    st.info("Ask me a question about [SEP 755 Computational Natural Langurage Processing](https://drive.google.com/file/d/1YpVo9bxj2aYcwEjEIce3YZXt5dny0869/view?usp=sharing) Course!", icon="📃")
             
     if "messages" not in st.session_state.keys(): # Initialize the chat messages history
         st.session_state.messages = [{
