@@ -15,9 +15,8 @@ load_dotenv()
 LLM_NAME = "meta-llama/Llama-2-7b-chat-hf"              # LLM model path from huggingface
 TOKENIZER_NAME = "meta-llama/Llama-2-7b-chat-hf"        # Tokenizer path from huggingface
 EMBED_MODEL_ID = "BAAI/bge-small-en-v1.5"               # Embedding model path from huggingface
-INPUT_DATA = './data/materials.md'                      # Path to the input data
+INPUT_DATA_PATH = './material'                          # Path to the input data
 QUESTION_LIST_PATH = './data/question_context.csv'      # Path to the question list
-# VECTOR_STORE_DIR = "./storage"                          # Path to the vector store directory
 VECTOR_STORE_DIR = "./vectorDB"                         # Path to the vector store directory
 CHUNK_SIZE = 256                                        # Chunk size for the vector store
 OVERLAP_SIZE = 10                                       # Overlap size for the vector store
@@ -63,13 +62,13 @@ def large_language_model(LLM_NAME, TOKENIZER_NAME, SYSTEM_PROMPT):
 
 # Ingestion of data
 def read_document(INPUT_DATA):
-    documents = SimpleDirectoryReader(input_files=[INPUT_DATA]).load_data()
+    documents = SimpleDirectoryReader(INPUT_DATA).load_data()
     return documents
     
 
 # Embeddings
 def get_embeddings(EMBED_MODEL_ID):
-    embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL_ID, max_length=512)
+    embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL_ID, max_length=1024)
     return embed_model
 
 
@@ -78,7 +77,7 @@ def index_and_store(VECTOR_STORE_DIR):
     # check if storage already exists
     if not os.path.exists(VECTOR_STORE_DIR):
         print("Creating New DB...")
-        index = VectorStoreIndex.from_documents(read_document(INPUT_DATA))
+        index = VectorStoreIndex.from_documents(read_document(INPUT_DATA_PATH))
         # store it for later
         index.storage_context.persist(persist_dir=VECTOR_STORE_DIR)
     else:
