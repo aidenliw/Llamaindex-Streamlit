@@ -3,7 +3,7 @@
 ⬆️ https://llamaindex1.streamlit.app/
 ```
 ## Overview of the App
-![alt text](https://github.com/aidenliw/llamaindex-streamlit/img/app_screenshot.png?raw=true)
+![app_screenshot](https://github.com/aidenliw/llamaindex-streamlit/blob/main/img/app_screenshot.png?raw=true)
 - Simple Chat App using LlamaIndex's RAG system with OpenAI GPT 3.5 turbo / Llama 2 large language model.
 - It can answer questions related to the SEP 775 Computational Natural Language Processing Course from MSET Program at McMaster University.
 
