@@ -1,6 +1,6 @@
 # 📦 Retrieval Augmented Generation (RAG) System Using LlamaIndex with OpenAI/Llama2 on Streamlit App
 ```
-⬆️ https://llamaindex1.streamlit.app/
+https://llamaindex1.streamlit.app/
 ```
 ## Overview of the App
 ![app_screenshot](https://github.com/aidenliw/llamaindex-streamlit/blob/main/img/app_screenshot.png?raw=true)
