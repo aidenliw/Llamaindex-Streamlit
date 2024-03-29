@@ -19,8 +19,8 @@ If you want to execute the application locally, please make sure you have done t
  4. Create an .env file on the root directory, save your secret keys into it.
     -  We need an OPENAI_API_KEY from [OpenAI](https://platform.openai.com/api-keys) and a HUGGINGFACE_API_KEY from [Hugging Face](https://huggingface.co/settings/tokens).
     -  The secret keys saved in your .env file should be as follows:
-    -  OPENAI_API_KEY='sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-    -  HUGGINGFACE_API_KEY='hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+      -  OPENAI_API_KEY='sk-xxx'
+      -  HUGGINGFACE_API_KEY='hf_xxx'
  5. Execute the application by using the following command in your terminal window:
     - For OpenAI app: python -m streamlit run streamlit_openai_app.py
     - For Llama2 app: python -m streamlit run streamlit_llama2_app.py
@@ -29,7 +29,7 @@ If you want to execute the application locally, please make sure you have done t
 
 ## Further Reading
 
-Interested in develop the app from scratch? Check out the documentations!
+Interested in developing the app from scratch? Check out the documentations!
 - [LlamaIndex](https://docs.llamaindex.ai/en/stable/)
 - [OpenAI](https://platform.openai.com/docs/overview)
 - [HuggingFace](https://huggingface.co/)
