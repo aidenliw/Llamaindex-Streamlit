@@ -1,6 +1,6 @@
 # 📦 Retrieval Augmented Generation (RAG) System Using LlamaIndex with OpenAI/Llama2 on Streamlit App
 ```
-⬆️ (Retrieval Augmented Generation (RAG) System Using Chat GPT With OpenAI)
+⬆️ https://llamaindex1.streamlit.app/
 ```
 
 Simple Chat App using LlamaIndex's RAG system with OpenAI GPT 3.5 turbo / Llama 2 large language model.
@@ -19,8 +19,8 @@ If you want to execute the application locally, please make sure you have done t
  4. Create an .env file on the root directory, save your secret keys into it.
     -  We need an OPENAI_API_KEY from [OpenAI](https://platform.openai.com/api-keys) and a HUGGINGFACE_API_KEY from [Hugging Face](https://huggingface.co/settings/tokens).
     -  The secret keys saved in your .env file should be as follows:
-      -  OPENAI_API_KEY='sk-xxx'
-      -  HUGGINGFACE_API_KEY='hf_xxx'
+       -  OPENAI_API_KEY='sk-xxx'
+       -  HUGGINGFACE_API_KEY='hf_xxx'
  5. Execute the application by using the following command in your terminal window:
     - For OpenAI app: python -m streamlit run streamlit_openai_app.py
     - For Llama2 app: python -m streamlit run streamlit_llama2_app.py
