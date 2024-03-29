@@ -33,6 +33,7 @@ If you want to execute the application locally, please make sure you have done t
 
 Interested in developing the app from scratch? Check out the documentations!
 - [LlamaIndex](https://docs.llamaindex.ai/en/stable/)
+- [Streamlit](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)
 - [OpenAI](https://platform.openai.com/docs/overview)
 - [HuggingFace](https://huggingface.co/)
 - [HuggingFace Llama-2-chat-hf Large Language Model](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
