@@ -9,7 +9,6 @@ from llama_index.llms.huggingface import HuggingFaceLLM
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 import os
 from dotenv import load_dotenv
-load_dotenv()
 
 # Parameter Initialization
 LLM_NAME = "meta-llama/Llama-2-7b-chat-hf"              # LLM model path from huggingface
@@ -105,12 +104,13 @@ def main():
     if "messages" not in st.session_state.keys(): # Initialize the chat messages history
         st.session_state.messages = [{
             "role": "assistant", 
-            "content": "Ask me a question about SEP 755 Computational Natural Langurage Processing Course!"
+            "content": "Hi! How can I help you today?"
         }]
 
     @st.cache_resource(show_spinner=False)
     def load_data():
         with st.spinner(text="Loading and document vectors – hang tight! This should take few seconds."):
+            load_dotenv()   # Load the environment variables
             Settings.llm = large_language_model(LLM_NAME, TOKENIZER_NAME, SYSTEM_PROMPT)
             Settings.embed_model = get_embeddings(EMBED_MODEL_ID)
             Settings.chunk_size = CHUNK_SIZE
