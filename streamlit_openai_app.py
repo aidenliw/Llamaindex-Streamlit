@@ -3,10 +3,11 @@ import os
 import tiktoken
 from llama_index.llms.openai import OpenAI
 from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader, \
-    StorageContext, load_index_from_storage
-from llama_index.core.response.pprint_utils import pprint_response
-from llama_index.core.memory import ChatMemoryBuffer
+    StorageContext, ChatPromptTemplate, load_index_from_storage
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+# from llama_index.embeddings.openai import OpenAIEmbedding
+# from llama_index.core.postprocessor import MetadataReplacementPostProcessor
+from llama_index.core.llms import ChatMessage, MessageRole
 import os
 from dotenv import load_dotenv
 
@@ -14,18 +15,20 @@ from dotenv import load_dotenv
 LLM_NAME = "gpt-3.5-turbo"                              # LLM model path from OpenAI
 TOKENIZER_NAME = "gpt-3.5-turbo"                        # Tokenizer path from OpenAI
 EMBED_MODEL_ID = "BAAI/bge-small-en-v1.5"               # Embedding model path from huggingface
+# EMBED_MODEL_ID = "text-embedding-3-small"               # Embedding model path from OpenAI
 INPUT_DATA_PATH = './material'                          # Path to the input data
 QUESTION_LIST_PATH = './data/question_context.csv'      # Path to the question list
 VECTOR_STORE_DIR = "./vectorDB"                         # Path to the vector store directory
 CHUNK_SIZE = 256                                        # Chunk size for the vector store
-OVERLAP_SIZE = 10                                       # Overlap size for the vector store
-SYSTEM_PROMPT="""
-You are an AI teaching Assistant for the SEP 775 course. 
+OVERLAP_SIZE = 10                                       # Overlap size for the vector store                 
+SYSTEM_PROMPT = ''' 
+You are an AI teaching Assistant for a course SEP 775 - Computational Natural Language Processing.
+The course is provided for graduate students from Master of Engineering in Systems and Technology program in McMaster University.
+This graduate course introduces some basic concepts in computational natural language processing (NLP) and their applications (e.g., self-driving cars, manufacturing, etc.) to teaching students how to deal with textual data in Artificial Intelligence. This course demonstrates how machines can learn different tasks in natural language, such as language modeling, text generation, machine translation, and language understanding. In this regard, we go over the most promising methods in this literature and the most recent state-of-the-art techniques. Moreover, this course explores different real-world applications of NLP and helps students get hands-on experience in this field.
 You will provide an interactive platform for students to ask questions and receive guidance on course materials.
 Your goal is to answer questions as accurately as possible based on the instructions and context provided.
-If you found the answer based on the context provided, you should provide the answer first, then at the end, beginning a new sentence with the words "Source:", followed by the name of the lecture, or assignment, or paper if possible.
-"""                                                     # create the instruction prompt                  
-
+If you found the answer based on the context provided, you should provide the answer first, then at the end, beginning a new sentence with the words 'Source:', followed by the name of the lecture, or assignment, or paper if possible.
+'''                                                     # create the instruction prompt      
 
 # create the LLM
 def large_language_model(LLM_NAME, SYSTEM_PROMPT):
@@ -49,6 +52,7 @@ def read_document(INPUT_DATA):
 # Embeddings
 def get_embeddings(EMBED_MODEL_ID):
     embed_model = HuggingFaceEmbedding(model_name=EMBED_MODEL_ID, max_length=1024)
+    # embed_model = OpenAIEmbedding(model=EMBED_MODEL_ID, max_length=1024)
     return embed_model
 
 
@@ -67,6 +71,31 @@ def index_and_store(VECTOR_STORE_DIR):
         index = load_index_from_storage(storage_context=storage_context)
     return index
 
+# Prompt for each Question
+def prompt_for_question():
+    # create a chat template for the QA task
+    qa_prompt_str = (
+        "Context information below is related to the course: SEP 775 - Computational Natural Language Processing.\n"
+        "If you found the answer based on the context provided, you should provide the answer first, then at the end, beginning a new sentence with the words 'Source:', followed by the name of the lecture, or assignment, or paper if possible.\n"
+        "---------------------\n"
+        "{context_str}\n"
+        "---------------------\n"
+        "Given the context information and not prior knowledge, "
+        "answer the question: {query_str}\n"
+    )
+
+    # Text QA Prompt
+    chat_text_qa_msgs = [
+        ChatMessage(
+            role=MessageRole.SYSTEM,
+            content=(
+                "Always answer the question, even if the context isn't helpful."
+            ),
+        ),
+        ChatMessage(role=MessageRole.USER, content=qa_prompt_str),
+    ]
+    text_qa_template = ChatPromptTemplate(chat_text_qa_msgs)
+    return text_qa_template
 
 # chatbot response
 def chatbot_response(question, index):
@@ -97,16 +126,20 @@ def main():
             Settings.chunk_size = CHUNK_SIZE
             Settings.chunk_overlap = OVERLAP_SIZE
             index = index_and_store(VECTOR_STORE_DIR)
-            return index
-    index = load_data()
-    
+            text_qa_template = prompt_for_question()
+            return index, text_qa_template
+    index, text_qa_template = load_data()
 
     if "chat_engine" not in st.session_state.keys(): # Initialize the chat engine
         st.session_state.chat_engine = index.as_chat_engine(
             chat_mode="context", #"condense_question", 
-            verbose=True,
+            verbose=False,
             system_prompt=(SYSTEM_PROMPT),
-            )
+            text_qa_template=text_qa_template,
+            # node_postprocessors=[
+            #     MetadataReplacementPostProcessor(target_metadata_key="window")
+            # ],
+        )
 
     if prompt := st.chat_input("Your question"): # Prompt for user input and save to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
